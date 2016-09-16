@@ -7,17 +7,6 @@ var world = new STSEngine.WorldImpl(worldSettings, objectStateListService);
 var STSEngine;
 (function (STSEngine) {
     "use strict";
-    (function (CommandType) {
-        CommandType[CommandType["MoveUp"] = 0] = "MoveUp";
-        CommandType[CommandType["MoveDown"] = 1] = "MoveDown";
-        CommandType[CommandType["MoveLeft"] = 2] = "MoveLeft";
-        CommandType[CommandType["MoveRight"] = 3] = "MoveRight";
-    })(STSEngine.CommandType || (STSEngine.CommandType = {}));
-    var CommandType = STSEngine.CommandType;
-})(STSEngine || (STSEngine = {}));
-var STSEngine;
-(function (STSEngine) {
-    "use strict";
 })(STSEngine || (STSEngine = {}));
 var STSEngine;
 (function (STSEngine) {
@@ -165,6 +154,17 @@ var STSEngine;
 var STSEngine;
 (function (STSEngine) {
     "use strict";
+    (function (CommandType) {
+        CommandType[CommandType["MoveUp"] = 0] = "MoveUp";
+        CommandType[CommandType["MoveDown"] = 1] = "MoveDown";
+        CommandType[CommandType["MoveLeft"] = 2] = "MoveLeft";
+        CommandType[CommandType["MoveRight"] = 3] = "MoveRight";
+    })(STSEngine.CommandType || (STSEngine.CommandType = {}));
+    var CommandType = STSEngine.CommandType;
+})(STSEngine || (STSEngine = {}));
+var STSEngine;
+(function (STSEngine) {
+    "use strict";
     (function (MoveDirection) {
         MoveDirection[MoveDirection["Up"] = 1] = "Up";
         MoveDirection[MoveDirection["Down"] = 2] = "Down";
@@ -184,6 +184,16 @@ var STSEngine;
 var STSEngine;
 (function (STSEngine) {
     "use strict";
+    class NotImplementedException extends STSEngine.BaseException {
+        constructor() {
+            super();
+        }
+    }
+    STSEngine.NotImplementedException = NotImplementedException;
+})(STSEngine || (STSEngine = {}));
+var STSEngine;
+(function (STSEngine) {
+    "use strict";
     class BaseException {
         constructor(message) {
             this.message = message;
@@ -193,16 +203,6 @@ var STSEngine;
         }
     }
     STSEngine.BaseException = BaseException;
-})(STSEngine || (STSEngine = {}));
-var STSEngine;
-(function (STSEngine) {
-    "use strict";
-    class NotImplementedException extends STSEngine.BaseException {
-        constructor() {
-            super();
-        }
-    }
-    STSEngine.NotImplementedException = NotImplementedException;
 })(STSEngine || (STSEngine = {}));
 var STSEngine;
 (function (STSEngine) {
@@ -244,6 +244,57 @@ var STSEngine;
         }
     }
     STSEngine.BaseProcessImpl = BaseProcessImpl;
+})(STSEngine || (STSEngine = {}));
+var STSEngine;
+(function (STSEngine) {
+    "use strict";
+    (function (ProcessStatus) {
+        ProcessStatus[ProcessStatus["Init"] = 0] = "Init";
+        ProcessStatus[ProcessStatus["Executing"] = 1] = "Executing";
+        ProcessStatus[ProcessStatus["Finished"] = 2] = "Finished";
+        ProcessStatus[ProcessStatus["Terminated"] = 3] = "Terminated";
+    })(STSEngine.ProcessStatus || (STSEngine.ProcessStatus = {}));
+    var ProcessStatus = STSEngine.ProcessStatus;
+})(STSEngine || (STSEngine = {}));
+var STSEngine;
+(function (STSEngine) {
+    "use strict";
+})(STSEngine || (STSEngine = {}));
+var STSEngine;
+(function (STSEngine) {
+    "use strict";
+})(STSEngine || (STSEngine = {}));
+var STSEngine;
+(function (STSEngine) {
+    "use strict";
+    class EngineImpl {
+        constructor(world) {
+            this.world = world;
+        }
+        getWorld() {
+            return this.world;
+        }
+        update(commandList) {
+        }
+    }
+    STSEngine.EngineImpl = EngineImpl;
+})(STSEngine || (STSEngine = {}));
+var STSEngine;
+(function (STSEngine) {
+    "use strict";
+    class FilterProcessListServiceImpl {
+        filterProcessList(state, isValid) {
+            var processList = [];
+            var filteredProcessList = [];
+            for (var p of processList) {
+                if (isValid(state, p)) {
+                    filteredProcessList.push(p);
+                }
+            }
+            return filteredProcessList;
+        }
+    }
+    STSEngine.FilterProcessListServiceImpl = FilterProcessListServiceImpl;
 })(STSEngine || (STSEngine = {}));
 var STSEngine;
 (function (STSEngine) {
@@ -319,17 +370,6 @@ var STSEngine;
 var STSEngine;
 (function (STSEngine) {
     "use strict";
-    (function (ProcessStatus) {
-        ProcessStatus[ProcessStatus["Init"] = 0] = "Init";
-        ProcessStatus[ProcessStatus["Executing"] = 1] = "Executing";
-        ProcessStatus[ProcessStatus["Finished"] = 2] = "Finished";
-        ProcessStatus[ProcessStatus["Terminated"] = 3] = "Terminated";
-    })(STSEngine.ProcessStatus || (STSEngine.ProcessStatus = {}));
-    var ProcessStatus = STSEngine.ProcessStatus;
-})(STSEngine || (STSEngine = {}));
-var STSEngine;
-(function (STSEngine) {
-    "use strict";
     class PointServiceImpl {
         copy(point) {
             return new STSEngine.PointImpl(point.getX(), point.getY());
@@ -346,46 +386,6 @@ var STSEngine;
 var STSEngine;
 (function (STSEngine) {
     "use strict";
-})(STSEngine || (STSEngine = {}));
-var STSEngine;
-(function (STSEngine) {
-    "use strict";
-})(STSEngine || (STSEngine = {}));
-var STSEngine;
-(function (STSEngine) {
-    "use strict";
-})(STSEngine || (STSEngine = {}));
-var STSEngine;
-(function (STSEngine) {
-    "use strict";
-    class EngineImpl {
-        constructor(world) {
-            this.world = world;
-        }
-        getWorld() {
-            return this.world;
-        }
-        update(commandList) {
-        }
-    }
-    STSEngine.EngineImpl = EngineImpl;
-})(STSEngine || (STSEngine = {}));
-var STSEngine;
-(function (STSEngine) {
-    "use strict";
-    class FilterProcessListServiceImpl {
-        filterProcessList(state, isValid) {
-            var processList = [];
-            var filteredProcessList = [];
-            for (var p of processList) {
-                if (isValid(state, p)) {
-                    filteredProcessList.push(p);
-                }
-            }
-            return filteredProcessList;
-        }
-    }
-    STSEngine.FilterProcessListServiceImpl = FilterProcessListServiceImpl;
 })(STSEngine || (STSEngine = {}));
 var STSEngine;
 (function (STSEngine) {
